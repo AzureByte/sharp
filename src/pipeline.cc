@@ -447,18 +447,32 @@ class PipelineWorker : public Nan::AsyncWorker {
             image = image.bandjoin(
               VImage::new_matrix(image.width(), image.height()).new_from_image(255 * multiplier));
           }
+
           // Embed
-          int left = static_cast<int>(round((baton->width - image.width()) / 2));
-          int top = static_cast<int>(round((baton->height - image.height()) / 2));
+
+          //Calculate where to position the embeded image if gravity specified, else center.
+          int left;
+          int top;
+
+          left = static_cast<int>(round((baton->width - image.width()) / 2));
+          top = static_cast<int>(round((baton->height - image.height()) / 2));
+
+          printf("batone %d", baton->embed);
+          std::tie(left, top) = sharp::CalculateEmbedPosition(
+            image.width(), image.height(), baton->width, baton->height, baton->embed
+          );
+
           image = image.embed(left, top, baton->width, baton->height, VImage::option()
             ->set("extend", VIPS_EXTEND_BACKGROUND)
             ->set("background", background));
+
         } else if (baton->canvas != Canvas::IGNORE_ASPECT) {
           // Crop/max/min
           if (baton->crop < 9) {
             // Gravity-based crop
             int left;
             int top;
+            printf("batonc %d", baton->crop);
             std::tie(left, top) = sharp::CalculateCrop(
               image.width(), image.height(), baton->width, baton->height, baton->crop);
             int width = std::min(image.width(), baton->width);

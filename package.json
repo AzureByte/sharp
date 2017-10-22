@@ -65,6 +65,7 @@
     "resize",
     "thumbnail",
     "crop",
+    "embed",
     "libvips",
     "vips"
   ],

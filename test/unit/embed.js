@@ -6,6 +6,19 @@ const sharp = require('../../');
 const fixtures = require('../fixtures');
 
 describe('Embed', function () {
+  it('Allows specifying the gravity as a string', function (done) {
+    sharp(fixtures.inputJpg)
+      .resize(320, 240)
+      .embed('east')
+      .png()
+      .toBuffer(function (err, data, info) {
+        if (err) throw err;
+        assert.strictEqual(320, info.width);
+        assert.strictEqual(240, info.height);
+        fixtures.assertSimilar(fixtures.expected('embed-3-into-3.png'), data, done);
+      });
+  });
+
   it('JPEG within PNG, no alpha channel', function (done) {
     sharp(fixtures.inputJpg)
       .embed()
