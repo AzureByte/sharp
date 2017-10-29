@@ -457,12 +457,14 @@ class PipelineWorker : public Nan::AsyncWorker {
           left = static_cast<int>(round((baton->width - image.width()) / 2));
           top = static_cast<int>(round((baton->height - image.height()) / 2));
 
+          int width = std::max(image.width(), baton->width);
+          int height = std::max(image.height(), baton->height);
           printf("batone %d", baton->embed);
           std::tie(left, top) = sharp::CalculateEmbedPosition(
             image.width(), image.height(), baton->width, baton->height, baton->embed
           );
 
-          image = image.embed(left, top, baton->width, baton->height, VImage::option()
+          image = image.embed(left, top, width, height, VImage::option()
             ->set("extend", VIPS_EXTEND_BACKGROUND)
             ->set("background", background));
 
@@ -1153,6 +1155,7 @@ NAN_METHOD(pipeline) {
   // Resize options
   baton->withoutEnlargement = AttrTo<bool>(options, "withoutEnlargement");
   baton->crop = AttrTo<int32_t>(options, "crop");
+  baton->embed = AttrTo<int32_t>(options, "embed");
   baton->kernel = AttrAsStr(options, "kernel");
   baton->centreSampling = AttrTo<bool>(options, "centreSampling");
   baton->fastShrinkOnLoad = AttrTo<bool>(options, "fastShrinkOnLoad");

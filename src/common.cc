@@ -421,17 +421,17 @@ namespace sharp {
     switch (gravity) {
       case 1:
         // North
-        left = (outWidth - inWidth - 1) / 2;
+        left = (outWidth - inWidth) / 2;
         break;
       case 2:
         // East
-        left = outWidth - inWidth - 1;
+        left = outWidth - inWidth;
         top = (outHeight - inHeight) / 2;
         break;
       case 3:
         // South
         left = (outWidth - inWidth) / 2;
-        top = outHeight - inHeight - 1;
+        top = outHeight - inHeight;
         break;
       case 4:
         // West
@@ -439,16 +439,16 @@ namespace sharp {
         break;
       case 5:
         // Northeast
-        left = outWidth - inWidth - 1;
+        left = outWidth - inWidth;
         break;
       case 6:
         // Southeast
-        left = outWidth - inWidth - 1;
-        top = outHeight - inHeight - 1;
+        left = outWidth - inWidth;
+        top = outHeight - inHeight;
         break;
       case 7:
         // Southwest
-        top = outHeight - inHeight - 1;
+        top = outHeight - inHeight;
         break;
       case 8:
         // Northwest
