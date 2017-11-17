@@ -450,7 +450,7 @@ class PipelineWorker : public Nan::AsyncWorker {
 
           // Embed
 
-          //Calculate where to position the embeded image if gravity specified, else center.
+          // Calculate where to position the embeded image if gravity specified, else center.
           int left;
           int top;
 
@@ -459,10 +459,8 @@ class PipelineWorker : public Nan::AsyncWorker {
 
           int width = std::max(image.width(), baton->width);
           int height = std::max(image.height(), baton->height);
-          printf("batone %d", baton->embed);
           std::tie(left, top) = sharp::CalculateEmbedPosition(
-            image.width(), image.height(), baton->width, baton->height, baton->embed
-          );
+            image.width(), image.height(), baton->width, baton->height, baton->embed);
 
           image = image.embed(left, top, width, height, VImage::option()
             ->set("extend", VIPS_EXTEND_BACKGROUND)
@@ -474,7 +472,6 @@ class PipelineWorker : public Nan::AsyncWorker {
             // Gravity-based crop
             int left;
             int top;
-            printf("batonc %d", baton->crop);
             std::tie(left, top) = sharp::CalculateCrop(
               image.width(), image.height(), baton->width, baton->height, baton->crop);
             int width = std::min(image.width(), baton->width);

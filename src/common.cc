@@ -456,10 +456,8 @@ namespace sharp {
         break;
       default:
         // Centre
-        printf("endedupindefault");
         left = (outWidth - inWidth) / 2;
         top = (outHeight - inHeight) / 2;
-
     }
     return std::make_tuple(left, top);
   }
